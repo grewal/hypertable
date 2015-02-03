@@ -25,4 +25,4 @@ if [ "e$RUNTIME_ROOT" == "e" ]; then
   RUNTIME_ROOT=$HYPERTABLE_HOME
 fi
 
-$RUNTIME_ROOT/bin/ht master_client --timeout 5000 --batch -e "status" "$@"
+$RUNTIME_ROOT/bin/ht rsclient --timeout 5000 --batch --no-hyperspace -e "status" "$@"

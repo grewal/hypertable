@@ -61,11 +61,12 @@
 
 #include <Common/FailureInducer.h>
 #include <Common/FileUtils.h>
-#include <Common/md5.h>
 #include <Common/Random.h>
+#include <Common/ScopeGuard.h>
+#include <Common/Status.h>
 #include <Common/StringExt.h>
 #include <Common/SystemInfo.h>
-#include <Common/ScopeGuard.h>
+#include <Common/md5.h>
 
 #include <boost/algorithm/string.hpp>
 
@@ -359,6 +360,11 @@ Apps::RangeServer::RangeServer(PropertiesPtr &props, ConnectionManagerPtr &conn_
   HT_INFOF("Prune thresholds - min=%lld, max=%lld", (Lld)Global::log_prune_threshold_min,
            (Lld)Global::log_prune_threshold_max);
 
+}
+
+void Apps::RangeServer::status(Response::Callback::Status *cb) {
+  Hypertable::Status status;
+  cb->response(status);
 }
 
 void Apps::RangeServer::shutdown() {

@@ -37,7 +37,7 @@ server_pidfile() {
     dfsbroker)          echo $RUNTIME_ROOT/run/DfsBroker.*.pid | grep -v "*";;
     fsbroker)           echo $RUNTIME_ROOT/run/FsBroker.*.pid | grep -v "*";;
     master)             echo $RUNTIME_ROOT/run/Master.pid;;
-    rangeserver)        echo $RUNTIME_ROOT/run/Hypertable.RangeServer.pid;;
+    rangeserver)        echo $RUNTIME_ROOT/run/RangeServer.pid;;
     thriftbroker)       echo $RUNTIME_ROOT/run/ThriftBroker*.pid | grep -v "*";;
     testclient)         echo $RUNTIME_ROOT/run/Hypertable.TestClient*.pid | grep -v "*";;
     testdispatcher)     echo $RUNTIME_ROOT/run/Hypertable.TestDispatcher.pid;;

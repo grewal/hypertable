@@ -40,6 +40,7 @@
 #include <Hypertable/RangeServer/Response/Callback/CreateScanner.h>
 #include <Hypertable/RangeServer/Response/Callback/GetStatistics.h>
 #include <Hypertable/RangeServer/Response/Callback/PhantomUpdate.h>
+#include <Hypertable/RangeServer/Response/Callback/Status.h>
 #include <Hypertable/RangeServer/Response/Callback/Update.h>
 #include <Hypertable/RangeServer/ScannerMap.h>
 #include <Hypertable/RangeServer/TableInfo.h>
@@ -207,6 +208,8 @@ namespace Apps {
     bool replay_finished() {
       return m_log_replay_barrier->user_complete();
     }
+
+    void status(Response::Callback::Status *cb);
 
     void shutdown();
 

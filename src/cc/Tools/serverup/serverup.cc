@@ -262,12 +262,8 @@ namespace {
       if (strcmp(host, "localhost") && strcmp(host, "127.0.0.1"))
         HT_THROW(Error::REQUEST_TIMEOUT, "connecting to master");
 
-      String state_file = System::install_dir + "/run/Hypertable.Master.state";
-      if (!FileUtils::exists(state_file))
-        HT_THROW(Error::REQUEST_TIMEOUT, "connecting to master");
-
       String pidstr;
-      String pid_file = System::install_dir + "/run/Hypertable.Master.pid";
+      String pid_file = System::install_dir + "/run/Master.pid";
       if (!FileUtils::read(pid_file, pidstr))
         HT_THROW(Error::FILE_NOT_FOUND, pid_file);
       pid_t pid = (pid_t)strtoul(pidstr.c_str(), 0, 0);
@@ -305,7 +301,13 @@ namespace {
     RangeServer::ClientPtr range_server
       = make_shared<RangeServer::Client>(conn_mgr->get_comm(), wait_ms);
     Timer timer(wait_ms, true);
-    range_server->status(addr, timer);
+    Status status;
+    range_server->status(addr, status, timer);
+    Status::Code code;
+    string text;
+    status.get(&code, text);
+    if (code != Status::Code::OK)
+      HT_THROW(Error::FAILED_EXPECTATION, text);
   }
 
   void check_thriftbroker(ConnectionManagerPtr &conn_mgr, int wait_ms) {
